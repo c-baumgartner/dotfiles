@@ -1,0 +1,5 @@
+# languages/tools
+brew "gh"
+brew "go"
+brew "python"
+brew "rust"
