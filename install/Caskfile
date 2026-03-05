@@ -1,6 +1,6 @@
 cask "applite"
 cask "dockdoor"
-cask "iterm2"
+cask "ghostty"
 cask "scroll-reverser"
 cask "visual-studio-code"
 cask "claude-code"
