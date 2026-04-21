@@ -1,0 +1,132 @@
+# .aliases - Shell aliases
+
+###############################################################################
+# Shell
+###############################################################################
+
+alias reload='exec zsh'
+alias _='sudo'
+
+# Show/hide hidden files in Finder
+alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
+alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder'
+
+###############################################################################
+# Navigation
+###############################################################################
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias -- -='cd -'   # Go back to previous directory
+
+# Common dirs
+alias dl='cd ~/Downloads'
+alias dt='cd ~/Desktop'
+alias dev='cd ~/Developer'
+alias dots='cd $DOTFILES_DIR'
+
+###############################################################################
+# File listing (use eza if available, fallback to ls)
+###############################################################################
+
+if command -v eza &>/dev/null; then
+  alias ls='eza --group-directories-first --icons'
+  alias l='eza -lbF --group-directories-first --icons'
+  alias ll='eza -lbGF --group-directories-first --icons'
+  alias la='eza -lbhHigmuSa --group-directories-first --icons'
+  alias lt='eza --tree --icons'
+  alias tree='eza --tree --icons'
+else
+  alias ls='ls --color=auto'
+  alias l='ls -lFh'
+  alias ll='ls -lFh'
+  alias la='ls -lAFh'
+fi
+
+###############################################################################
+# File operations (safer defaults)
+###############################################################################
+
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+
+# Use bat instead of cat if available
+if command -v bat &>/dev/null; then
+  alias cat='bat --paging=never'
+fi
+
+###############################################################################
+# Git
+###############################################################################
+
+alias g='git'
+alias gs='git status -sb'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit -v'
+alias gcm='git commit -m'
+alias gca='git commit -v --amend'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --oneline --graph --decorate --all'
+alias gll='git log --stat'
+alias gp='git push'
+alias gpl='git pull'
+alias gpf='git push --force-with-lease'
+alias gst='git stash'
+alias gstp='git stash pop'
+alias grb='git rebase'
+alias grbi='git rebase -i'
+alias gf='git fetch --all --prune'
+alias gclean='git clean -fd'
+
+###############################################################################
+# Network
+###############################################################################
+
+# Get public IP
+alias ip='curl -s https://api.ipify.org && echo'
+# Get local IP
+alias localip="ipconfig getifaddr en0"
+# Flush DNS cache
+alias flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; echo "DNS flushed"'
+
+###############################################################################
+# macOS utilities
+###############################################################################
+
+# Lock screen
+alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+# Show/hide Desktop icons
+alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
+alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
+# Empty trash securely
+alias emptytrash='sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl'
+# Spotlight
+alias spotoff='sudo mdutil -a -i off'
+alias spoton='sudo mdutil -a -i on'
+# Show/hide hidden files shortcut (see above)
+alias showhidden='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
+alias hidehidden='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder'
+
+###############################################################################
+# Misc
+###############################################################################
+
+# Print PATH entries one per line
+alias path='echo -e ${PATH//:/\\n}'
+# Week number
+alias week='date +%V'
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+# Disk usage human readable, sorted
+alias duh='du -sh * | sort -h'
+# Quick HTTP server in current dir
+alias serve='python3 -m http.server 8000'
+# gh shortcut
+alias gh='gh'

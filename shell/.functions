@@ -1,0 +1,125 @@
+# .functions - Shell utility functions
+
+# Create a directory and cd into it
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# cd into a directory and immediately list its contents
+cdl() {
+  cd "$1" && ls
+}
+
+# Move up N directory levels  (usage: up 3)
+up() {
+  local d=""
+  for ((i=1; i<=${1:-1}; i++)); do
+    d="${d}../"
+  done
+  cd "$d"
+}
+
+# Universal archive extractor
+extract() {
+  if [[ -f "$1" ]]; then
+    case "$1" in
+      *.tar.bz2)  tar xjf "$1"  ;;
+      *.tar.gz)   tar xzf "$1"  ;;
+      *.tar.xz)   tar xJf "$1"  ;;
+      *.bz2)      bunzip2 "$1"  ;;
+      *.rar)      unrar e "$1"  ;;
+      *.gz)       gunzip "$1"   ;;
+      *.tar)      tar xf "$1"   ;;
+      *.tbz2)     tar xjf "$1"  ;;
+      *.tgz)      tar xzf "$1"  ;;
+      *.zip)      unzip "$1"    ;;
+      *.Z)        uncompress "$1" ;;
+      *.7z)       7z x "$1"    ;;
+      *)          echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Create a .tar.gz archive from a directory or file
+targz() {
+  local tmpFile="${@%/}.tar"
+  tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
+  gzip -v "${tmpFile}" || return 1
+  [[ -f "${tmpFile}" ]] && rm "${tmpFile}"
+}
+
+# Calculator (usage: calc "2 + 2")
+calc() {
+  echo "$*" | bc -l
+}
+
+# Weather in terminal (usage: weather berlin)
+weather() {
+  local location="${*:-}"
+  location="${location// /+}"
+  curl -s "wttr.in/${location}?format=3"
+}
+
+# Full weather report
+forecast() {
+  local location="${*:-}"
+  location="${location// /+}"
+  curl -s "wttr.in/${location}"
+}
+
+# Show the size of files/dirs, sorted
+sizeof() {
+  du -sh "${@:-.}"/* | sort -h
+}
+
+# Find a file by name (case-insensitive)
+ff() {
+  find . -iname "*${1}*"
+}
+
+# Find a process by name
+psg() {
+  ps aux | grep -v grep | grep -i "$1"
+}
+
+# Quickly grep through history
+hist() {
+  history | grep "$1"
+}
+
+# Create a temporary directory and cd into it
+tmpd() {
+  local dir
+  dir=$(mktemp -d) && cd "$dir"
+}
+
+# Open the current directory in Finder
+finder() {
+  open "${1:-.}"
+}
+
+# Print a horizontal rule
+hr() {
+  printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
+# Quick git clone and cd into it (usage: gcl owner/repo or full URL)
+gcl() {
+  local repo="$1"
+  # If no protocol specified, assume GitHub
+  if [[ "$repo" != *"://"* && "$repo" != "git@"* ]]; then
+    repo="https://github.com/${repo}.git"
+  fi
+  git clone "$repo" && cd "$(basename "$repo" .git)"
+}
+
+# Show git log as a graph with fzf preview (requires fzf)
+if command -v fzf &>/dev/null; then
+  glf() {
+    git log --oneline --color=always |
+      fzf --ansi --preview 'git show --color=always {1}' \
+          --bind 'enter:execute(git show --color=always {1} | less -R)'
+  }
+fi

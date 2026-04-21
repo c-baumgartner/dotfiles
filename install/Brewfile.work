@@ -1,0 +1,8 @@
+# Work-specific CLI tools
+
+# Infrastructure
+brew "opentofu"
+brew "terragrunt"
+
+# Cloud
+brew "azure-cli"

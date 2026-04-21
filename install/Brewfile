@@ -1,5 +1,23 @@
 # languages/tools
 brew "gh"
 brew "go"
+brew "node"
 brew "python"
 brew "rust"
+
+# shell
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "starship"
+brew "zoxide"
+brew "fzf"
+
+# modern cli replacements
+brew "bat"        # better cat (syntax highlighting)
+brew "eza"        # better ls (with icons, colors)
+brew "fd"         # better find
+brew "ripgrep"    # better grep
+brew "delta"      # better git diff
+
+# utilities
+brew "stow"       # symlink manager (used by install script)

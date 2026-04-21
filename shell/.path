@@ -1,0 +1,22 @@
+# .path - PATH configuration
+# Note: Homebrew is set up in .zprofile (login shell).
+# This file adds user-specific paths on top.
+
+# Helper: prepend to PATH only if dir exists and not already in PATH
+prepend_path() {
+  [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]] && export PATH="$1:$PATH"
+}
+
+# Dotfiles bin
+prepend_path "$DOTFILES_DIR/bin"
+
+# User local bin
+prepend_path "$HOME/.local/bin"
+
+# Go binaries
+prepend_path "$HOME/go/bin"
+
+# Deduplicate PATH entries
+export PATH="$(awk -v RS=: -v ORS=: '!seen[$0]++' <<< "$PATH" | sed 's/:$//')"
+
+unset prepend_path

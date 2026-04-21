@@ -1,0 +1,42 @@
+# .zshrc.work - Work machine shell config
+# Symlinked to ~/.zshrc.local by: make work
+
+###############################################################################
+# Azure CLI
+###############################################################################
+
+# Azure CLI completions
+if command -v az &>/dev/null; then
+  autoload -U +X bashcompinit && bashcompinit
+  source "$(brew --prefix)/etc/bash_completion.d/az"
+fi
+
+###############################################################################
+# .NET / C#
+###############################################################################
+
+# Opt out of .NET telemetry
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_NOLOGO=1
+
+# Add dotnet tools to PATH
+if [[ -d "$HOME/.dotnet/tools" ]]; then
+  export PATH="$HOME/.dotnet/tools:$PATH"
+fi
+
+###############################################################################
+# OpenTofu / Terragrunt
+###############################################################################
+
+# Disable OpenTofu checkpoint (update checks)
+export CHECKPOINT_DISABLE=1
+
+# Aliases
+alias tf='tofu'
+alias tg='terragrunt'
+alias tginit='terragrunt init'
+alias tgplan='terragrunt plan'
+alias tgapply='terragrunt apply'
+alias tgdestroy='terragrunt destroy'
+alias tgoutput='terragrunt output'
+
