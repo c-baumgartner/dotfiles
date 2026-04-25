@@ -1,5 +1,4 @@
 # Work-specific GUI apps
 
 # Languages / runtimes
-cask "powershell"
 cask "dotnet-sdk"

@@ -1,4 +1,5 @@
 cask "applite"
+cask "raycast"
 cask "dockdoor"
 cask "ghostty"
 cask "scroll-reverser"

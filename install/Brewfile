@@ -4,6 +4,7 @@ brew "go"
 brew "node"
 brew "python"
 brew "rust"
+brew "powershell"
 
 # shell
 brew "zsh-autosuggestions"
