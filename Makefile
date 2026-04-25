@@ -40,9 +40,9 @@ brew:
 
 packages: brew
 	@echo "Installing Brew packages..."
-	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile --no-lock || true
+	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile || true
 	@echo "Installing Cask apps..."
-	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile --no-lock || true
+	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile || true
 
 ###############################################################################
 # npm-packages: install global npm packages from npmfile
@@ -100,9 +100,9 @@ defaults:
 
 work: sudo brew
 	@echo "Installing work Brew packages..."
-	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile.work --no-lock || true
+	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile.work || true
 	@echo "Installing work Cask apps..."
-	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile.work --no-lock || true
+	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile.work || true
 	@echo "Linking work shell config as ~/.zshrc.local..."
 	@if [[ -f "$(HOME)/.zshrc.local" && ! -L "$(HOME)/.zshrc.local" ]]; then \
 		echo "  Backing up ~/.zshrc.local -> ~/.zshrc.local.bak"; \

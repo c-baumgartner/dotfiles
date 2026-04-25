@@ -33,7 +33,23 @@ _source "$DOTFILES_DIR/shell/.path"
 _source "$DOTFILES_DIR/shell/.functions"
 _source "$DOTFILES_DIR/shell/.aliases"
 
-# Local overrides (machine-specific, not in git)
+###############################################################################
+# Completion
+###############################################################################
+
+autoload -Uz compinit
+
+# Regenerate completions cache only once a day
+if [[ -n "$ZSH_COMPDUMP" ]] && [[ $(find "$ZSH_COMPDUMP" -mtime +1 2>/dev/null) ]]; then
+  compinit -d "$ZSH_COMPDUMP"
+else
+  ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+  mkdir -p "$(dirname "$ZSH_COMPDUMP")"
+  compinit -d "$ZSH_COMPDUMP"
+fi
+
+# Local overrides (machine-specific, not in git) — sourced after compinit so
+# that compdef is available for tools like az that call it during setup
 _source "$HOME/.zshrc.local"
 
 unset -f _source
@@ -51,21 +67,6 @@ setopt HIST_REDUCE_BLANKS       # Remove superfluous blanks before recording
 setopt SHARE_HISTORY            # Share history between all sessions
 setopt APPEND_HISTORY           # Append to history file, don't overwrite
 setopt INC_APPEND_HISTORY       # Write to history file immediately, not on exit
-
-###############################################################################
-# Completion
-###############################################################################
-
-autoload -Uz compinit
-
-# Regenerate completions cache only once a day
-if [[ -n "$ZSH_COMPDUMP" ]] && [[ $(find "$ZSH_COMPDUMP" -mtime +1 2>/dev/null) ]]; then
-  compinit -d "$ZSH_COMPDUMP"
-else
-  ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-  mkdir -p "$(dirname "$ZSH_COMPDUMP")"
-  compinit -d "$ZSH_COMPDUMP"
-fi
 
 # Completion options
 setopt ALWAYS_TO_END        # Move cursor to end of word after completing
