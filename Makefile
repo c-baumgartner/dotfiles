@@ -113,6 +113,9 @@ link: brew
 	fi
 	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" tmux
 	@echo "tmux config linked."
+	@echo "Linking PowerShell config..."
+	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" powershell
+	@echo "PowerShell config linked."
 
 ###############################################################################
 # unlink: remove stow symlinks and restore backups
@@ -139,6 +142,8 @@ unlink:
 		mv "$(HOME)/.tmux.conf.bak" "$(HOME)/.tmux.conf"; \
 	fi
 	@echo "tmux config unlinked."
+	@stow --delete --target="$(HOME)" --dir="$(DOTFILES_DIR)" powershell
+	@echo "PowerShell config unlinked."
 
 ###############################################################################
 # defaults: apply macOS system defaults
@@ -163,6 +168,12 @@ work: sudo brew
 	@tenv tofu install latest && tenv tofu use latest || true
 	@tenv tf install latest && tenv tf use latest || true
 	@tenv tg install latest && tenv tg use latest || true
+	@echo "Installing PowerShell modules..."
+	@if command -v pwsh &>/dev/null; then \
+		pwsh -NoProfile -File $(DOTFILES_DIR)/install/Install-PwshModules.ps1; \
+	else \
+		echo "pwsh not found — skipping PowerShell modules."; \
+	fi
 	@echo "Linking work shell config as ~/.zshrc.local..."
 	@if [[ -f "$(HOME)/.zshrc.local" && ! -L "$(HOME)/.zshrc.local" ]]; then \
 		echo "  Backing up ~/.zshrc.local -> ~/.zshrc.local.bak"; \
