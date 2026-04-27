@@ -23,3 +23,6 @@ brew "delta"      # better git diff
 # utilities
 brew "stow"       # symlink manager (used by install script)
 brew "tmux"       # terminal multiplexer
+
+# ai coding tools
+brew "asheshgoplani/tap/agent-deck"  # Terminal session manager for AI coding agents.
