@@ -4,12 +4,12 @@ BREW := $(HOMEBREW_PREFIX)/bin/brew
 export DOTFILES_DIR
 export STOW_DIR = $(DOTFILES_DIR)
 
-.PHONY: all macos sudo brew packages npm-packages link unlink defaults work update help
+.PHONY: all macos sudo brew packages npm-packages vscode-extensions link unlink defaults work update help
 
 all: macos
 
 # Full macOS setup — run this on a fresh machine
-macos: sudo brew packages npm-packages link defaults
+macos: sudo brew packages npm-packages vscode-extensions link defaults
 	@echo ""
 	@echo "Setup complete. Restart your terminal or run: exec zsh"
 
@@ -51,6 +51,22 @@ packages: brew
 npm-packages: packages
 	@echo "Installing npm packages..."
 	@npm install --location=global $(shell cat $(DOTFILES_DIR)/install/npmfile | tr '\n' ' ')
+
+###############################################################################
+# vscode-extensions: install VS Code extensions from vscode-extensions file
+###############################################################################
+
+vscode-extensions: packages
+	@if ! command -v code &>/dev/null; then \
+		echo "VS Code CLI (code) not found — skipping extensions."; \
+	else \
+		echo "Installing VS Code extensions..."; \
+		while IFS= read -r ext || [[ -n "$$ext" ]]; do \
+			[[ -z "$$ext" || "$$ext" == \#* ]] && continue; \
+			code --install-extension "$$ext" --force; \
+		done < $(DOTFILES_DIR)/install/vscode-extensions; \
+		echo "VS Code extensions installed."; \
+	fi
 
 ###############################################################################
 # link: symlink shell config files into $HOME using stow
@@ -133,6 +149,7 @@ update:
 	@git -C $(DOTFILES_DIR) pull --rebase
 	@$(MAKE) packages
 	@$(MAKE) npm-packages
+	@$(MAKE) vscode-extensions
 	@$(MAKE) defaults
 	@echo "Update complete."
 
@@ -146,7 +163,8 @@ help:
 	@echo ""
 	@echo "  macos      Full setup on a fresh macOS machine (default)"
 	@echo "  packages       Install Homebrew packages and cask apps"
-	@echo "  npm-packages   Install global npm packages"
+	@echo "  npm-packages       Install global npm packages"
+	@echo "  vscode-extensions  Install VS Code extensions"
 	@echo "  link       Symlink shell + Ghostty configs into ~/"
 	@echo "  unlink     Remove shell + Ghostty symlinks, restore backups"
 	@echo "  defaults   Apply macOS system defaults"
