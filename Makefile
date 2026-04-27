@@ -4,12 +4,12 @@ BREW := $(HOMEBREW_PREFIX)/bin/brew
 export DOTFILES_DIR
 export STOW_DIR = $(DOTFILES_DIR)
 
-.PHONY: all macos sudo brew packages npm-packages vscode-extensions link unlink defaults work update help
+.PHONY: all macos sudo brew packages npm-packages vscode-extensions claude-code link unlink defaults work update help
 
 all: macos
 
 # Full macOS setup — run this on a fresh machine
-macos: sudo brew packages npm-packages vscode-extensions link defaults
+macos: sudo brew packages npm-packages vscode-extensions claude-code link defaults
 	@echo ""
 	@echo "Setup complete. Restart your terminal or run: exec zsh"
 
@@ -66,6 +66,19 @@ vscode-extensions: packages
 			code --install-extension "$$ext" --force; \
 		done < $(DOTFILES_DIR)/install/vscode-extensions; \
 		echo "VS Code extensions installed."; \
+	fi
+
+###############################################################################
+# claude-code: install Claude Code plugins and skills
+###############################################################################
+
+claude-code: npm-packages
+	@if ! command -v claude &>/dev/null; then \
+		echo "Claude Code CLI not found — skipping."; \
+	else \
+		echo "Installing Claude Code plugins..."; \
+		claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman; \
+		echo "Claude Code plugins installed."; \
 	fi
 
 ###############################################################################
@@ -134,6 +147,7 @@ unlink:
 defaults:
 	@echo "Applying macOS defaults..."
 	@bash $(DOTFILES_DIR)/macos/defaults.sh
+	@mkdir -p $(HOME)/Developer
 	@echo "macOS defaults applied."
 
 ###############################################################################
@@ -145,12 +159,23 @@ work: sudo brew
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile.work || true
 	@echo "Installing work Cask apps..."
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile.work || true
+	@echo "Installing tenv managed tools..."
+	@tenv tofu install latest && tenv tofu use latest || true
+	@tenv tf install latest && tenv tf use latest || true
+	@tenv tg install latest && tenv tg use latest || true
 	@echo "Linking work shell config as ~/.zshrc.local..."
 	@if [[ -f "$(HOME)/.zshrc.local" && ! -L "$(HOME)/.zshrc.local" ]]; then \
 		echo "  Backing up ~/.zshrc.local -> ~/.zshrc.local.bak"; \
 		mv "$(HOME)/.zshrc.local" "$(HOME)/.zshrc.local.bak"; \
 	fi
 	@ln -sf "$(DOTFILES_DIR)/shell/.zshrc.work" "$(HOME)/.zshrc.local"
+	@echo "Cloning private dotfiles..."
+	@if [[ ! -d "$(HOME)/.dotfiles-private" ]]; then \
+		git clone https://github.com/c-baumgartner/dotfiles-private.git $(HOME)/.dotfiles-private; \
+	else \
+		git -C $(HOME)/.dotfiles-private pull --rebase; \
+	fi
+	@$(MAKE) -C $(HOME)/.dotfiles-private clone
 	@echo "Work setup complete. Restart your terminal or run: exec zsh"
 
 ###############################################################################
@@ -163,6 +188,7 @@ update:
 	@$(MAKE) packages
 	@$(MAKE) npm-packages
 	@$(MAKE) vscode-extensions
+	@$(MAKE) claude-code
 	@$(MAKE) defaults
 	@echo "Update complete."
 
@@ -178,6 +204,7 @@ help:
 	@echo "  packages       Install Homebrew packages and cask apps"
 	@echo "  npm-packages       Install global npm packages"
 	@echo "  vscode-extensions  Install VS Code extensions"
+	@echo "  claude-code        Install Claude Code plugins and skills"
 	@echo "  link       Symlink shell + Ghostty configs into ~/"
 	@echo "  unlink     Remove shell + Ghostty symlinks, restore backups"
 	@echo "  defaults   Apply macOS system defaults"

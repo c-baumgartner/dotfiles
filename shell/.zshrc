@@ -101,6 +101,9 @@ bindkey '^[[1;5C' forward-word        # Ctrl+Right
 bindkey '^[[1;5D' backward-word       # Ctrl+Left
 bindkey '^[[3~'   delete-char         # Delete
 
+# ghq repo picker (defined in .functions, registered there via zle -N)
+bindkey '^G' _ghq_fzf
+
 # History search with up/down arrows (matches current input prefix)
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search

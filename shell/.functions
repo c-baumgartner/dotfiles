@@ -115,6 +115,23 @@ gcl() {
   git clone "$repo" && cd "$(basename "$repo" .git)"
 }
 
+# Jump to a ghq-managed repo with fzf (Ctrl+G)
+if command -v ghq &>/dev/null && command -v fzf &>/dev/null; then
+  _ghq_fzf() {
+    local repo
+    repo=$(ghq list | fzf \
+      --preview "eza --tree --level=2 --icons --color=always $(ghq root)/{}" \
+      --preview-window=right:50%:wrap \
+      --prompt="repo> ")
+    if [[ -n "$repo" ]]; then
+      BUFFER="cd $(ghq root)/$repo"
+      zle accept-line
+    fi
+    zle reset-prompt
+  }
+  zle -N _ghq_fzf
+fi
+
 # Show git log as a graph with fzf preview (requires fzf)
 if command -v fzf &>/dev/null; then
   glf() {

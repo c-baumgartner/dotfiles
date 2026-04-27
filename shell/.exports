@@ -55,6 +55,9 @@ export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 # Go
 export GOPATH="$HOME/go"
 
+# ghq — git repository manager
+export GHQ_ROOT="$HOME/Developer"
+
 # Prevent Homebrew from sending analytics
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_ENV_HINTS=1
