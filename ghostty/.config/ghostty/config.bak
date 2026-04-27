@@ -30,8 +30,8 @@ window-padding-y = 8
 macos-titlebar-style = tabs
 
 # ── macOS ─────────────────────────────────────────────────────────────────────
-# Treat Option as Alt — required for readline shortcuts (alt+b/f), vim, etc.
-macos-option-as-alt = true
+# Option produces macOS special chars (German layout: opt+7 = |, +8 = {, +9 = }, +L = @, +N = ~).
+macos-option-as-alt = false
 
 # ── Shell Integration ─────────────────────────────────────────────────────────
 # Enables semantic prompt zones, working-dir tracking, sudo passthrough, title.

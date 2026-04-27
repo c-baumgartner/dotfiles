@@ -22,3 +22,4 @@ brew "delta"      # better git diff
 
 # utilities
 brew "stow"       # symlink manager (used by install script)
+brew "tmux"       # terminal multiplexer

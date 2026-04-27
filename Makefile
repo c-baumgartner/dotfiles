@@ -93,6 +93,13 @@ link: brew
 	fi
 	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" ghostty
 	@echo "Ghostty config linked."
+	@echo "Linking tmux config..."
+	@if [[ -f "$(HOME)/.tmux.conf" && ! -L "$(HOME)/.tmux.conf" ]]; then \
+		echo "  Backing up ~/.tmux.conf -> ~/.tmux.conf.bak"; \
+		mv "$(HOME)/.tmux.conf" "$(HOME)/.tmux.conf.bak"; \
+	fi
+	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" tmux
+	@echo "tmux config linked."
 
 ###############################################################################
 # unlink: remove stow symlinks and restore backups
@@ -113,6 +120,12 @@ unlink:
 		mv "$(HOME)/.config/ghostty/config.bak" "$(HOME)/.config/ghostty/config"; \
 	fi
 	@echo "Ghostty config unlinked."
+	@stow --delete --target="$(HOME)" --dir="$(DOTFILES_DIR)" tmux
+	@if [[ -f "$(HOME)/.tmux.conf.bak" ]]; then \
+		echo "  Restoring ~/.tmux.conf.bak -> ~/.tmux.conf"; \
+		mv "$(HOME)/.tmux.conf.bak" "$(HOME)/.tmux.conf"; \
+	fi
+	@echo "tmux config unlinked."
 
 ###############################################################################
 # defaults: apply macOS system defaults
