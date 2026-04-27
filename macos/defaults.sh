@@ -214,6 +214,13 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 # Set Dock icon size
 defaults write com.apple.dock tilesize -int 48
 
+# Position Dock on right side
+defaults write com.apple.dock orientation -string "right"
+
+# Enable magnification
+defaults write com.apple.dock magnification -bool true
+defaults write com.apple.dock largesize -int 72
+
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
 
