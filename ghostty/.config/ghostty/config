@@ -1,0 +1,72 @@
+# ─── Ghostty Configuration ────────────────────────────────────────────────────
+# https://ghostty.org/docs/config/reference
+# Run `ghostty +list-themes` to browse built-in themes.
+# Run `ghostty +list-fonts` to browse available fonts.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Font ──────────────────────────────────────────────────────────────────────
+# Monaspace Neon is installed via dotfiles (font-monaspace cask).
+# ss01–ss05: Monaspace stylistic sets for coding ligatures and variants.
+font-family = "Monaspace Neon"
+font-size = 13
+font-feature = +calt
+font-feature = +ss01
+font-feature = +ss02
+font-feature = +ss03
+font-feature = +ss04
+font-feature = +ss05
+font-feature = +liga
+
+# ── Theme / Appearance ────────────────────────────────────────────────────────
+theme = Catppuccin Mocha
+background-opacity = 0.95
+background-blur-radius = 20
+
+# ── Window ────────────────────────────────────────────────────────────────────
+window-decoration = auto
+window-padding-x = 8
+window-padding-y = 8
+# tabs: show macOS native tab bar, functional for multi-session dev work
+macos-titlebar-style = tabs
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+# Treat Option as Alt — required for readline shortcuts (alt+b/f), vim, etc.
+macos-option-as-alt = true
+
+# ── Shell Integration ─────────────────────────────────────────────────────────
+# Enables semantic prompt zones, working-dir tracking, sudo passthrough, title.
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# ── Cursor ────────────────────────────────────────────────────────────────────
+cursor-style = block
+cursor-style-blink = false
+
+# ── Mouse & Clipboard ─────────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+# Selection immediately goes to the system clipboard (paste with cmd+v anywhere).
+copy-on-select = clipboard
+clipboard-read = allow
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+
+# ── Scrollback ────────────────────────────────────────────────────────────────
+# 10 000 lines is generous without being unbounded.
+scrollback-limit = 10000
+
+# ── Visual ────────────────────────────────────────────────────────────────────
+# catppuccin-mocha already has distinct bright variants; no need to force bold=bright.
+bold-is-bright = false
+# Suppress the resize overlay — distracting during Claude Code TUI sessions.
+resize-overlay = never
+focus-follows-mouse = false
+
+# ── Terminal identity ─────────────────────────────────────────────────────────
+# xterm-256color maximises compatibility with remote hosts and tools that do not
+# carry the ghostty terminfo. Ghostty also sets COLORTERM=truecolor and
+# TERM_PROGRAM=ghostty so true-colour apps still detect 24-bit colour.
+term = xterm-256color
+
+# ── Keybindings ───────────────────────────────────────────────────────────────
+# cmd+k clears the screen (analogous to iTerm2 / Terminal.app behaviour).
+keybind = cmd+k=clear_screen

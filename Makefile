@@ -4,7 +4,7 @@ BREW := $(HOMEBREW_PREFIX)/bin/brew
 export DOTFILES_DIR
 export STOW_DIR = $(DOTFILES_DIR)
 
-.PHONY: all macos sudo brew packages npm-packages link defaults work update help
+.PHONY: all macos sudo brew packages npm-packages link unlink defaults work update help
 
 all: macos
 
@@ -70,6 +70,13 @@ link: brew
 	done
 	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" shell
 	@echo "Shell config files linked."
+	@echo "Linking Ghostty config..."
+	@if [[ -f "$(HOME)/.config/ghostty/config" && ! -L "$(HOME)/.config/ghostty/config" ]]; then \
+		echo "  Backing up ~/.config/ghostty/config -> ~/.config/ghostty/config.bak"; \
+		mv "$(HOME)/.config/ghostty/config" "$(HOME)/.config/ghostty/config.bak"; \
+	fi
+	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" ghostty
+	@echo "Ghostty config linked."
 
 ###############################################################################
 # unlink: remove stow symlinks and restore backups
@@ -84,6 +91,12 @@ unlink:
 		fi; \
 	done
 	@echo "Shell config files unlinked."
+	@stow --delete --target="$(HOME)" --dir="$(DOTFILES_DIR)" ghostty
+	@if [[ -f "$(HOME)/.config/ghostty/config.bak" ]]; then \
+		echo "  Restoring ~/.config/ghostty/config.bak -> ~/.config/ghostty/config"; \
+		mv "$(HOME)/.config/ghostty/config.bak" "$(HOME)/.config/ghostty/config"; \
+	fi
+	@echo "Ghostty config unlinked."
 
 ###############################################################################
 # defaults: apply macOS system defaults
@@ -134,8 +147,8 @@ help:
 	@echo "  macos      Full setup on a fresh macOS machine (default)"
 	@echo "  packages       Install Homebrew packages and cask apps"
 	@echo "  npm-packages   Install global npm packages"
-	@echo "  link       Symlink shell config files into ~/"
-	@echo "  unlink     Remove shell config symlinks, restore backups"
+	@echo "  link       Symlink shell + Ghostty configs into ~/"
+	@echo "  unlink     Remove shell + Ghostty symlinks, restore backups"
 	@echo "  defaults   Apply macOS system defaults"
 	@echo "  work       Install work-specific packages and shell config"
 	@echo "  update     Pull latest changes and re-run packages + defaults"
