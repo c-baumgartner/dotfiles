@@ -164,3 +164,12 @@ fi
 if command -v gh &>/dev/null; then
   eval "$(gh completion -s zsh)"
 fi
+
+# bun completions
+[ -s "/Users/christian.baumgartner/.bun/_bun" ] && source "/Users/christian.baumgartner/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "$HOME/.local/share/../bin/env"
