@@ -2,7 +2,9 @@
 brew "gh"
 brew "go"
 brew "node"
+brew "bun"        # required by claude-mem
 brew "python"
+brew "uv"         # fast python package manager
 brew "rust"
 brew "powershell"
 

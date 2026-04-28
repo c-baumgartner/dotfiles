@@ -78,6 +78,7 @@ claude-code: npm-packages
 	else \
 		echo "Installing Claude Code plugins..."; \
 		claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman; \
+		claude plugin marketplace add thedotmack/claude-mem && claude plugin install claude-mem@claude-mem; \
 		echo "Claude Code plugins installed."; \
 	fi
 
