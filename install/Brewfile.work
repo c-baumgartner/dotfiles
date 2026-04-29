@@ -5,3 +5,6 @@ brew "tenv"
 
 # Cloud
 brew "azure-cli"
+
+# Node
+brew "pnpm"
