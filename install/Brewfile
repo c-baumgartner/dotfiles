@@ -31,4 +31,5 @@ brew "ghq"        # git repository manager
 brew "asheshgoplani/tap/agent-deck"  # Terminal session manager for AI coding agents.
 
 # containers
-brew "container"  # Apple's native Linux container runtime (macOS 15+, arm64)
+brew "container"          # Apple's native Linux container runtime (macOS 15+, arm64)
+brew "container-compose"  # docker-compose-like tool for Apple Container
