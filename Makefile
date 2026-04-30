@@ -165,6 +165,8 @@ work: sudo brew
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile.work || true
 	@echo "Installing work Cask apps..."
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Caskfile.work || true
+	@echo "Installing work npm packages..."
+	@npm install --location=global $(shell cat $(DOTFILES_DIR)/install/npmfile.work | tr '\n' ' ')
 	@echo "Installing tenv managed tools..."
 	@tenv tofu install latest && tenv tofu use latest || true
 	@tenv tf install latest && tenv tf use latest || true

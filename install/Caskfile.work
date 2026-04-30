@@ -5,3 +5,7 @@ cask "dotnet-sdk"
 
 # Tools
 cask "gitify"
+cask "microsoft-azure-storage-explorer"
+
+# Fonts
+cask "font-lato"

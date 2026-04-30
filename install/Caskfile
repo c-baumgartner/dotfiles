@@ -18,3 +18,5 @@ cask "maccy"
 cask "iina"
 cask "shottr"
 cask "ngrok"
+cask "zed"
+

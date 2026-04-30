@@ -5,6 +5,8 @@ brew "tenv"
 
 # Cloud
 brew "azure-cli"
+tap "azure/functions"
+brew "azure/functions/azure-functions-core-tools@4"
 
 # Node
 brew "pnpm"
