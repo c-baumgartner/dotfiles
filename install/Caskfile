@@ -19,4 +19,4 @@ cask "shottr"
 cask "ngrok"
 cask "zed"
 cask "elgato-stream-deck"
-
+cask "elgato-wave-link"
