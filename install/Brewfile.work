@@ -2,6 +2,7 @@
 
 # Infrastructure
 brew "tenv"
+brew "aztfexport"
 
 # Cloud
 brew "azure-cli"
