@@ -9,3 +9,7 @@ cask "microsoft-azure-storage-explorer"
 
 # Fonts
 cask "font-lato"
+
+# Password Management
+cask "keeper-password-manager"
+

@@ -3,6 +3,8 @@
 # Infrastructure
 brew "tenv"
 brew "aztfexport"
+brew "tflint"
+brew "terraform-docs"
 
 # Cloud
 brew "azure-cli"
