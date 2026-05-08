@@ -13,3 +13,7 @@ brew "azure/functions/azure-functions-core-tools@4"
 
 # Node
 brew "pnpm"
+
+# Misc
+brew "vhs"
+brew "mermaid-cli"
