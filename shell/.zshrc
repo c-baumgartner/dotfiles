@@ -173,3 +173,8 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 . "$HOME/.local/share/../bin/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/christian.baumgartner/.lmstudio/bin"
+# End of LM Studio CLI section
+
