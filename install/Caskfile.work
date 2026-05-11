@@ -6,6 +6,7 @@ cask "dotnet-sdk"
 # Tools
 cask "gitify"
 cask "goland"
+cask "lm-studio"
 cask "microsoft-azure-storage-explorer"
 
 # Fonts
