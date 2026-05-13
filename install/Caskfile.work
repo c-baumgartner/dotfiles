@@ -15,3 +15,4 @@ cask "font-lato"
 # Password Management
 cask "keeper-password-manager"
 
+cask "windows-app"
