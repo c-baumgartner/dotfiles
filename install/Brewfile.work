@@ -17,3 +17,4 @@ brew "pnpm"
 # Misc
 brew "vhs"
 brew "mermaid-cli"
+brew "marp-cli"
