@@ -7,6 +7,7 @@ brew "python"
 brew "uv"         # fast python package manager
 brew "rust"
 brew "powershell"
+brew "lazygit"
 
 # shell
 brew "zsh-autosuggestions"
@@ -14,6 +15,7 @@ brew "zsh-syntax-highlighting"
 brew "starship"
 brew "zoxide"
 brew "fzf"
+brew "nvim"
 
 # modern cli replacements
 brew "bat"        # better cat (syntax highlighting)
