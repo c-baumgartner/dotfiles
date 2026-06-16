@@ -24,3 +24,5 @@ cask "drawio"
 cask "nvidia-geforce-now"
 cask "obsidian"
 cask "excalidrawz"
+cask "bambu-studio"
+

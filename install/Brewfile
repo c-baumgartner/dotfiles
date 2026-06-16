@@ -8,6 +8,8 @@ brew "uv"         # fast python package manager
 brew "rust"
 brew "powershell"
 brew "lazygit"
+brew "yq"
+
 
 # shell
 brew "zsh-autosuggestions"
