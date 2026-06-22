@@ -178,3 +178,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$PATH:/Users/christian.baumgartner/.lmstudio/bin"
 # End of LM Studio CLI section
 
+###############################################################################
+# Greeting
+###############################################################################
+
+# Show system info on new interactive shell
+if command -v macfetch &>/dev/null; then
+  macfetch
+fi
+

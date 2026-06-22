@@ -1,0 +1,42 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Compact single-line config for the Claude Code statusline.
+# Rendered by claude/statusline.sh via STARSHIP_CONFIG.
+palette = 'catppuccin_macchiato'
+
+add_newline = false
+
+format = "$directory$git_branch$git_status$env_var"
+
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style) "
+
+[git_branch]
+symbol = " "
+style = "bold mauve"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "red"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+
+[env_var.CLAUDE_MODEL]
+variable = "CLAUDE_MODEL"
+style = "yellow"
+format = "[ $env_value]($style)"
+
+[palettes.catppuccin_macchiato]
+mauve = "#c6a0f6"
+red = "#ed8796"
+yellow = "#eed49f"
+blue = "#8aadf4"
+text = "#cad3f5"

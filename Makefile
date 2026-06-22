@@ -39,6 +39,10 @@ brew:
 ###############################################################################
 
 packages: brew
+	@echo "Trusting non-official taps (Homebrew 6+)..."
+	@$(BREW) trust --tap gantoreno/macfetch || true
+	@$(BREW) trust --tap oven-sh/bun || true
+	@$(BREW) trust --tap asheshgoplani/tap || true
 	@echo "Installing Brew packages..."
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile || true
 	@echo "Installing Cask apps..."
@@ -117,6 +121,13 @@ link: brew
 	@echo "Linking PowerShell config..."
 	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" powershell
 	@echo "PowerShell config linked."
+	@echo "Linking starship config..."
+	@if [[ -f "$(HOME)/.config/starship.toml" && ! -L "$(HOME)/.config/starship.toml" ]]; then \
+		echo "  Backing up ~/.config/starship.toml -> ~/.config/starship.toml.bak"; \
+		mv "$(HOME)/.config/starship.toml" "$(HOME)/.config/starship.toml.bak"; \
+	fi
+	@stow --target="$(HOME)" --dir="$(DOTFILES_DIR)" starship
+	@echo "starship config linked."
 
 ###############################################################################
 # unlink: remove stow symlinks and restore backups
@@ -145,6 +156,12 @@ unlink:
 	@echo "tmux config unlinked."
 	@stow --delete --target="$(HOME)" --dir="$(DOTFILES_DIR)" powershell
 	@echo "PowerShell config unlinked."
+	@stow --delete --target="$(HOME)" --dir="$(DOTFILES_DIR)" starship
+	@if [[ -f "$(HOME)/.config/starship.toml.bak" ]]; then \
+		echo "  Restoring ~/.config/starship.toml.bak -> ~/.config/starship.toml"; \
+		mv "$(HOME)/.config/starship.toml.bak" "$(HOME)/.config/starship.toml"; \
+	fi
+	@echo "starship config unlinked."
 
 ###############################################################################
 # defaults: apply macOS system defaults
@@ -161,6 +178,8 @@ defaults:
 ###############################################################################
 
 work: sudo brew
+	@echo "Trusting non-official work taps (Homebrew 6+)..."
+	@$(BREW) trust --tap azure/functions || true
 	@echo "Installing work Brew packages..."
 	@$(BREW) bundle --file=$(DOTFILES_DIR)/install/Brewfile.work || true
 	@echo "Installing work Cask apps..."
