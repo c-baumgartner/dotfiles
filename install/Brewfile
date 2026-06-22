@@ -27,6 +27,8 @@ brew "ripgrep"    # better grep
 brew "delta"      # better git diff
 
 # utilities
+tap "gantoreno/macfetch"
+brew "macfetch"   # neofetch-like system info for macOS
 brew "stow"       # symlink manager (used by install script)
 brew "tmux"       # terminal multiplexer
 brew "ghq"        # git repository manager
