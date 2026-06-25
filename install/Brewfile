@@ -10,6 +10,9 @@ brew "powershell"
 brew "lazygit"
 brew "yq"
 
+# git related stuff
+brew "pre-commit"  # git pre-commit hook framework (pre-commit.com)
+brew "gitleaks"
 
 # shell
 brew "zsh-autosuggestions"
