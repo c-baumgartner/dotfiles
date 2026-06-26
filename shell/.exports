@@ -61,3 +61,6 @@ export GHQ_ROOT="$HOME/Developer"
 # Prevent Homebrew from sending analytics
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_ENV_HINTS=1
+
+# Opt out of Azure Functions Core Tools telemetry
+export FUNCTIONS_CORE_TOOLS_TELEMETRY_OPTOUT=1
